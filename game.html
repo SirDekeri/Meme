@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Me and my Baby</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-image: url(sefunmi.jfif);
+    }
+    
+    h1 {
+      color: #5dba23;
+    }
+    
+    #options {
+      margin: 20px auto;
+      width: 200px;
+    }
+    
+    #options button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    
+    #message {
+      margin-top: 20px;
+      font-weight: bold;
+      color: rgb(165, 42, 42);
+    }
+  </style>
+</head>
+<body> 
+  <audio id="bgAudio" src="all_of_me.mp3" loop controls></audio>
+
+  <h1>Fun time with my golden girl</h1>
+  <div id="options">
+    <button id="option1">A) Click me for a surprise</button>
+    <button id="option2">B) Click me for a surprise</button>
+  </div>
+  <div id="message"></div>
+  <div id="hiddenAnswer" style="display: none;">Hidden Answer: <span id="answer"></span></div>
+  
+  <button id="playButton">Play Audio</button>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var hiddenAnswer = getHiddenAnswer();
+      
+      var option1 = document.getElementById("option1");
+      var option2 = document.getElementById("option2");
+      var message = document.getElementById("message");
+      var answerElement = document.getElementById("answer");
+      var hiddenAnswerElement = document.getElementById("hiddenAnswer");
+      
+      option1.addEventListener("click", function() {
+        answerElement.textContent = hiddenAnswer;
+        hiddenAnswerElement.style.display = "block";
+        
+        if (checkAnswer("A", hiddenAnswer)) {
+          message.textContent = "Congratulations! You just won a dinner ticket to Bodija: You won.";
+        } else {
+          message.textContent = "Good for me, you will have to text me every hour for the full day: You lose.";
+        }
+      });
+      
+      option2.addEventListener("click", function() {
+        answerElement.textContent = hiddenAnswer;
+        hiddenAnswerElement.style.display = "block";
+        
+        if (checkAnswer("B", hiddenAnswer)) {
+          message.textContent = "Congratulations! You just won a dinner ticket to Bodija: You won.";
+        } else {
+          message.textContent = "Good for me, you will have to text me every hour for the full day: You lose.";
+        }
+      });
+
+      var playButton = document.getElementById("playButton");
+      playButton.addEventListener("click", function() {
+        var audio = document.getElementById("bgAudio");
+        audio.play();
+        playButton.style.display = "none";
+      });
+    });
+    
+    function getHiddenAnswer() {
+      var hiddenAnswers = [" "];
+      var randomIndex = Math.floor(Math.random() * hiddenAnswers.length);
+      return hiddenAnswers[randomIndex];
+    }
+    
+    function checkAnswer(selection, answer) {
+      if (selection === "A" && ["You won"].includes(answer)) {
+        return true;
+      } else if (selection === "B" && !["You lose"].includes(answer)) {
+        return true;
+      }
+      return false;
+    }
+  </script>
+</body>
+</html>
